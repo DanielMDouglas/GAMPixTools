@@ -30,7 +30,6 @@ for infile in os.listdir(input_edepsim_dir):
     # for evID in tqdm.tqdm(evIDs[:50]):
     # for evID in tqdm.tqdm(range(100)):
     for evID in tqdm.tqdm(evIDs):
-
         try:
             track = electron_track_tools.Track(input_edepsim_file,
                                                evID,
