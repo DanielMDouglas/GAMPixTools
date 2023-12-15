@@ -12,9 +12,7 @@ from GAMPixTools import electron_track_tools
 depth = 0 # include no additional shifting
 
 # Find files - get list of files in folder with single energy tracks.
-# input_edepsim_file = '/home/dan/studies/GAMPix/muon_sample/dumpTree_single_particle_1c2374f4-aaeb-4004-983f-213dcbc63871.h5'
-# input_edepsim_file = '/home/dan/studies/GAMPix/neutrino_sample/joined.genie.edepsim.04de6916-8bdc-427c-8517-123000e9a743.h5'
-input_edepsim_dir = '/home/dan/studies/GAMPix/neutrino_sample'
+input_edepsim_dir = '/sdf/group/neutrino/gampix/neutrino_sample/primaryKinematics'
 
 primE = []
 intCode = []
