@@ -13,8 +13,8 @@ depth = 0 # include no additional shifting
 
 # Find files - get list of files in folder with single energy tracks.
 # input_edepsim_dir = '/home/dan/studies/GAMPix/neutrino_sample'
-# input_edepsim_dir = '/sdf/group/neutrino/gampix/neutrino_sample/primaryKinematics'
-input_edepsim_dir = '/sdf/group/neutrino/gampix/FD_size_samples/muon_1-4GeV/dumpTree'
+input_edepsim_dir = '/sdf/group/neutrino/gampix/neutrino_sample/primaryKinematics'
+# input_edepsim_dir = '/sdf/group/neutrino/gampix/FD_size_samples/muon_1-4GeV/dumpTree'
 
 primE = []
 intCode = []
