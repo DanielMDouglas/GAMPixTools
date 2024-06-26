@@ -28,7 +28,7 @@ chargeCollLarpix = []
 for infile in os.listdir(input_edepsim_dir):
     input_edepsim_file = os.path.join(input_edepsim_dir, infile)
     with h5py.File(input_edepsim_file) as f:
-        evIDs = np.unique(f['primaries']['eventID'])
+        evIDs = np.unique(f['vertices']['eventID'])
     # for evID in tqdm.tqdm(evIDs[:50]):
     # for evID in tqdm.tqdm(range(100)):
     for evID in tqdm.tqdm(evIDs):
