@@ -83,7 +83,7 @@ def h5_convert(segments, trajectories,
                          )/1000 #convert to m from mm
         
         ### find trackID
-        trackID = track['trackID']
+        trackID = track['track_id']
         trackID_subs = np.full(N_sub, trackID)
         
         
@@ -95,11 +95,11 @@ def h5_convert(segments, trajectories,
         generation = 0 
         
         trajectory = trajectories[trackID]
-        parent_id = trajectory['parentID']
+        parent_id = trajectory['parent_id']
         
         while parent_id != -1:
             trajectory = trajectories[parent_id]
-            parent_id = trajectory['parentID']
+            parent_id = trajectory['parent_id']
             generation += 1
         
         generation_subs = np.full(N_sub, generation)
@@ -132,7 +132,7 @@ def h5_convert(segments, trajectories,
         
         #find initial direction. TODO: this doesn't work for GENIE inputs that don't have the primary neutrino
         eventMask = trajectories['event_id'] == segments[0]['event_id']
-        trackMask = trajectories['trackID'] == 0 #first track
+        trackMask = trajectories['track_id'] == 0 #first track
         initial_trajectory = trajectories[eventMask & trackMask]
         initial_direction = np.array(initial_trajectory['pxyz_start']/np.linalg.norm(
                                 initial_trajectory['pxyz_start'])).reshape(3,1) #must be this shape
