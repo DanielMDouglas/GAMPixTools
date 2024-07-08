@@ -402,13 +402,13 @@ def load_track_from_numpy(full_file_name, **kwargs):
     return raw_track, truth, meta
 
 def load_track_from_dumpTree(full_file_name,
-                             eventID,
+                             event_id,
                              pdgMask = None, 
                              randomize = False,
                              simulation_bounds = [[-29000,29000], [-7250,7250], [-12000,0]], #mm. 
                              **kwargs):
     """
-    Loads .h5 file and returns segments with given eventID
+    Loads .h5 file and returns segments with given event_id
 
     7/5/23 DD
     """
@@ -417,10 +417,10 @@ def load_track_from_dumpTree(full_file_name,
 
     f = h5py.File(full_file_name)
 
-    segmentMask = f['segments']['eventID'] == eventID
+    segmentMask = f['segments']['event_id'] == event_id
     evSegments = f['segments'][segmentMask]
 
-    trajMask = f['trajectories']['eventID'] == eventID
+    trajMask = f['trajectories']['event_id'] == event_id
     evTraj = f['trajectories'][trajMask]
     
     if pdgMask:
