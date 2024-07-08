@@ -8,7 +8,7 @@ from math import log, isnan
 
 from . import consts
 
-#insert segment data for a single eventID. trajectories can include all the trajectories or just those within the event
+#insert segment data for a single event_id. trajectories can include all the trajectories or just those within the event
 #division_size, origin_shift in mm
 #origin_shift is relative change of origin of position basis (added to original x,y,z)
 #use after running dE_to_dQ
@@ -24,7 +24,7 @@ def h5_convert(segments, trajectories,
     
 
     #check that all segments are from the same event
-    assert((segments['eventID'] == segments[0]['eventID']).all())
+    assert((segments['event_id'] == segments[0]['event_id']).all())
     
     #arrays to fill in
     r_array          = np.empty((3,0))
@@ -131,7 +131,7 @@ def h5_convert(segments, trajectories,
     if make_pickle:
         
         #find initial direction. TODO: this doesn't work for GENIE inputs that don't have the primary neutrino
-        eventMask = trajectories['eventID'] == segments[0]['eventID']
+        eventMask = trajectories['event_id'] == segments[0]['event_id']
         trackMask = trajectories['trackID'] == 0 #first track
         initial_trajectory = trajectories[eventMask & trackMask]
         initial_direction = np.array(initial_trajectory['pxyz_start']/np.linalg.norm(
