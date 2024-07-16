@@ -405,7 +405,8 @@ def load_track_from_dumpTree(full_file_name,
                              event_id,
                              pdgMask = None, 
                              randomize = False,
-                             simulation_bounds = [[-29000,29000], [-7250,7250], [-12000,0]], #mm. 
+                             simulation_bounds = None, 
+                             # simulation_bounds = [[-29000,29000], [-7250,7250], [-12000,0]], #mm. 
                              **kwargs):
     """
     Loads .h5 file and returns segments with given event_id
@@ -433,7 +434,7 @@ def load_track_from_dumpTree(full_file_name,
 
     edepsim_tools.quench(evSegments)
 
-    if randomize: #randomize the position and momentum of the primary vertex. should be done for GENIE data, which starts off at the origin with momentum along +z
+    if randomize and simulation_bounds: #randomize the position and momentum of the primary vertex. should be done for GENIE data, which starts off at the origin with momentum along +z
         evSegments, evTraj = edepsim_tools.randomize_primary_state(evSegments, evTraj, simulation_bounds)
     
     r, num_e, generation, trackID, pdgID, track_info = edepsim_tools.h5_convert(evSegments, evTraj, 

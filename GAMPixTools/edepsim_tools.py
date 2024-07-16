@@ -19,7 +19,8 @@ def h5_convert(segments, trajectories,
                filename = None,
                make_pickle = True, 
                division_size = 0.1, origin_shift = [0,0,0],
-               simulation_extent = [[-29000,29000], [-7250,7250], [-12000,0]],
+               simulation_extent = None,
+               # simulation_extent = [[-29000,29000], [-7250,7250], [-12000,0]],
                track_energy = 1E6):
     
 
@@ -83,22 +84,21 @@ def h5_convert(segments, trajectories,
                          )/1000 #convert to m from mm
         
         ### find trackID
-        trackID = track['track_id']
-        trackID_subs = np.full(N_sub, trackID)
-        
+        trackID = track['traj_id']
+        trackID_subs = np.full(N_sub, trackID)        
         
         ### find pdgID
-        pdgID = track['pdgId']
+        pdgID = track['pdg_id']
         pdgID_subs = np.full(N_sub, pdgID)
         
         ### calculate generation
         generation = 0 
         
-        trajectory = trajectories[trackID]
+        trajectory = trajectories[trajectories['traj_id'] == trackID][0]
         parent_id = trajectory['parent_id']
         
         while parent_id != -1:
-            trajectory = trajectories[parent_id]
+            trajectory = trajectories[trajectories['traj_id'] == parent_id][0]
             parent_id = trajectory['parent_id']
             generation += 1
         
@@ -132,7 +132,7 @@ def h5_convert(segments, trajectories,
         
         #find initial direction. TODO: this doesn't work for GENIE inputs that don't have the primary neutrino
         eventMask = trajectories['event_id'] == segments[0]['event_id']
-        trackMask = trajectories['track_id'] == 0 #first track
+        trackMask = trajectories['traj_id'] == 0 #first track
         initial_trajectory = trajectories[eventMask & trackMask]
         initial_direction = np.array(initial_trajectory['pxyz_start']/np.linalg.norm(
                                 initial_trajectory['pxyz_start'])).reshape(3,1) #must be this shape
