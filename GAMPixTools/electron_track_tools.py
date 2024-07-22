@@ -438,7 +438,8 @@ def load_track_from_dumpTree(full_file_name,
         evSegments, evTraj = edepsim_tools.randomize_primary_state(evSegments, evTraj, simulation_bounds)
     
     r, num_e, generation, trackID, pdgID, track_info = edepsim_tools.h5_convert(evSegments, evTraj, 
-                                                                                simulation_extent=simulation_bounds)
+                                                                                simulation_extent=simulation_bounds,
+                                                                                **kwargs)
 
     ### decompress track ###
     num_e_out, r_out, generation_out, trackID_out, pdgID_out = decompress_track(30, num_e, r, generation, trackID, pdgID)

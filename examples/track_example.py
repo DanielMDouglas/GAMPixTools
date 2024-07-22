@@ -6,15 +6,15 @@ from GAMPixTools import electron_track_tools
 
 #   Some settings
 # edep-sim generation volume is set so that z < 0, so z == 0 defines the anode
-depth = 100
+depth = 0
 
 # Find files - get list of files in folder with single energy tracks.
-# input_edepsim_file = '/sdf/group/neutrino/gampix/FD_size_samples/muon_1-4GeV/dumpTree/dumpTree_single_particle_5b581549-0553-4106-9266-19a6d2e49f62.h5'
+input_edepsim_file = '/sdf/group/neutrino/gampix/FD_size_samples/muon_1-4GeV/dumpTree/dumpTree_single_particle_5b581549-0553-4106-9266-19a6d2e49f62.h5'
 # input_edepsim_file = '/sdf/home/s/seohyeon/output_stuff/larnd_test.h5'
-input_edepsim_file = '/sdf/home/d/dougl215/studies/MPVMPR/samples/singleParticleMuon/test_edep_output_dumptree.h5'
 track = electron_track_tools.Track(input_edepsim_file, # input file
                                    0, # event to load
-                                   input_format = 'dumpTree', # loader method 
+                                   input_format = 'dumpTree', # loader method
+                                   origin_shift = [0, 0, -1000],
                                    )
 
 print (track.raw_track['r'])

@@ -21,7 +21,8 @@ def h5_convert(segments, trajectories,
                division_size = 0.1, origin_shift = [0,0,0],
                simulation_extent = None,
                # simulation_extent = [[-29000,29000], [-7250,7250], [-12000,0]],
-               track_energy = 1E6):
+               track_energy = 1E6,
+               **kwargs):
     
 
     #check that all segments are from the same event
@@ -52,7 +53,7 @@ def h5_convert(segments, trajectories,
             while np.round(n_electrons/N_sub) == 0:
                 N_sub -= 1 #don't subdivide so finely that there's no electrons per subsegment  
         n_elec_subs = np.full(N_sub, np.round(n_electrons/N_sub), dtype = np.int64)
-        
+
         ### calculate r
         x_start = track['x_start'] + origin_shift[0] #mm
         y_start = track['y_start'] + origin_shift[1]
