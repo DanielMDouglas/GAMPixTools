@@ -126,11 +126,11 @@ class Track:
 
         #   Drift distance.  If depth supplied, subtract it.  Otherwise
         #   it is the negative value of z (z=0 is the anode plane)
-        drift_distance = - (self.raw_track['r'][2, :] - depth)
+        drift_distance = abs(self.raw_track['r'][2, :])
 
-        if np.any(drift_distance<0):
-            sys.exit('Negative drift distances in '
-                     + 'electron_track_tools.apply_drift')
+        #if np.any(drift_distance<0):
+        #    sys.exit('Negative drift distances in '
+        #             + 'electron_track_tools.apply_drift')
 
         #    Survival fraction to trapping
         survive = np.exp(-drift_distance
