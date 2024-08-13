@@ -1,3 +1,6 @@
+# this version allows for events with no segments - changes in assert, origin, and initial_direction.
+# zcut before sim
+
 import numpy as np
 import h5py
 import pickle
@@ -26,7 +29,8 @@ def h5_convert(segments, trajectories,
     
 
     #check that all segments are from the same event
-    assert((segments['event_id'] == segments[0]['event_id']).all())
+    if len(segments) != 0:
+        assert((segments['event_id'] == segments[0]['event_id']).all())
     
     #arrays to fill in
     r_array          = np.empty((3,0))
@@ -83,6 +87,7 @@ def h5_convert(segments, trajectories,
                  + dvec/2
                  + np.array([n*dvec for n in np.arange(0, N_sub)])
                          )/1000 #convert to m from mm
+
         
         ### find trackID
         trackID = track['traj_id']
@@ -132,10 +137,11 @@ def h5_convert(segments, trajectories,
     if make_pickle:
         
         #find initial direction. TODO: this doesn't work for GENIE inputs that don't have the primary neutrino
-        eventMask = trajectories['event_id'] == segments[0]['event_id']
-        trackMask = trajectories['traj_id'] == 0 #first track
-        initial_trajectory = trajectories[eventMask & trackMask]
-        initial_direction = np.array(initial_trajectory['pxyz_start']/np.linalg.norm(
+        if len(segments) != 0:
+            eventMask = trajectories['event_id'] == segments[0]['event_id']
+            trackMask = trajectories['traj_id'] == 0 #first track
+            initial_trajectory = trajectories[eventMask & trackMask]
+            initial_direction = np.array(initial_trajectory['pxyz_start']/np.linalg.norm(
                                 initial_trajectory['pxyz_start'])).reshape(3,1) #must be this shape
                                 
         
@@ -150,7 +156,11 @@ def h5_convert(segments, trajectories,
         num_electrons = np.sum(n_elec_array)
         
         #origin
-        origin = (np.array(initial_trajectory['xyz_start']) + np.array(origin_shift)).reshape(3,)/10 #origin currently in cm!
+        if len(segments) != 0:
+            origin = (np.array(initial_trajectory['xyz_start']) + np.array(origin_shift)).reshape(3,)/10 #origin currently in cm!
+        else:
+            origin = 0
+            initial_direction = 0
         
         attributes = {
             'truth': 
@@ -215,6 +225,7 @@ def h5_convert(segments, trajectories,
 
         return r_array, n_elec_array, generation_array, trackID_array, pdgID_array, attributes
 
+                
     return r_array, n_elec_array, generation_array, trackID_array, pdgID_array
 
 #give an event a random initial position within the simulated bounds and a random initial momentum.
@@ -282,5 +293,4 @@ def quench(tracks, mode = consts.BIRKS):
             raise RuntimeError("Invalid recombination value")
 
         tracks[itrk]["n_electrons"] = recomb * dE / consts.W_ION
-
 
