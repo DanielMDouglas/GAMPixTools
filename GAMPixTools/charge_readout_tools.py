@@ -272,8 +272,10 @@ def readout_pixels(r, num_e, pixel_sensors, z_limits=None,
         r_triggered[2, :] = locations_z[trigger_mask]
     #   Raw is all charge, without noise
     if raw_output:
+        
         signal_mask = samples_raw > 0
         samples_raw = samples_raw[signal_mask].flatten()
+ 
         r_raw = np.zeros((3, np.sum(signal_mask)))
         r_raw[0, :] = locations_x[signal_mask]
         r_raw[1, :] = locations_y[signal_mask]
