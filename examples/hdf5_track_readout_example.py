@@ -8,16 +8,10 @@ def main(args):
     # edep-sim generation volume is set so that z < 0, so z == 0 defines the anode
     depth = 0
 
-    # Find files - get list of files in folder with single energy tracks.
-    # input_edepsim_file = '/home/dan/studies/GAMPix/muon_sample/dumpTree_single_particle_1c2374f4-aaeb-4004-983f-213dcbc63871.h5'
-    # input_edepsim_file = '/home/dan/studies/gpt_test/neutron_sample/dumpTree_single_particle_6ba9f09c-f652-4923-a79e-45d94a346663.h5'
+    # Find files - use input args from CLI.
     track = electron_track_tools.Track(args.input_edepsim_file,
-                                       5,
+                                       args.event_index,
                                        input_format = 'dumpTree')
-
-    # print(f'{energy/1000:3.02f} keV track {file_num:1.0f}'
-    #       + f', with {track.truth["num_electrons"]:4.0f} e-'
-    #       + f', at {depth:2.1f} m depth')
 
     # set the readout to GAMPix for DUNE
     track.reset_params(charge_readout='GAMPixD')

@@ -421,10 +421,10 @@ def load_track_from_dumpTree(full_file_name,
 
     f = h5py.File(full_file_name)
 
-    segmentMask = f['segments']['event_id'] == event_id
+    segmentMask = f['segments']['eventID'] == event_id
     evSegments = f['segments'][segmentMask]
 
-    trajMask = f['trajectories']['event_id'] == event_id
+    trajMask = f['trajectories']['eventID'] == event_id
     evTraj = f['trajectories'][trajMask]
     
     if pdgMask:
