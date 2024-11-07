@@ -128,6 +128,7 @@ class Track:
         #   it is the negative value of z (z=0 is the anode plane)
         drift_distance = - (self.raw_track['r'][2, :] - depth)
 
+        # TODO: just mask the samples where drift_distance < 0 and continue
         if np.any(drift_distance<0):
             sys.exit('Negative drift distances in '
                      + 'electron_track_tools.apply_drift')
