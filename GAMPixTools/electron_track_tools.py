@@ -126,12 +126,14 @@ class Track:
 
         #   Drift distance.  If depth supplied, subtract it.  Otherwise
         #   it is the negative value of z (z=0 is the anode plane)
-        drift_distance = - (self.raw_track['r'][2, :] - depth)
-
-        # TODO: just mask the samples where drift_distance < 0 and continue
-        if np.any(drift_distance<0):
-            sys.exit('Negative drift distances in '
-                     + 'electron_track_tools.apply_drift')
+        #drift_distance = -(self.raw_track['r'][2, :])
+        drift_distance = abs(self.raw_track['r'][2, :])
+        # add depth back in, how to determine drift distance for +z
+        
+        
+        #if np.any(drift_distance<0):
+         #   sys.exit('Negative drift distances in '
+          #           + 'electron_track_tools.apply_drift')
 
         #    Survival fraction to trapping
         survive = np.exp(-drift_distance
@@ -419,10 +421,10 @@ def load_track_from_dumpTree(full_file_name,
 
     f = h5py.File(full_file_name)
 
-    segmentMask = f['segments']['event_id'] == event_id
+    segmentMask = f['segments']['eventID'] == event_id
     evSegments = f['segments'][segmentMask]
 
-    trajMask = f['trajectories']['event_id'] == event_id
+    trajMask = f['trajectories']['eventID'] == event_id
     evTraj = f['trajectories'][trajMask]
     
     if pdgMask:
