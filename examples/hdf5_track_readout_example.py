@@ -9,9 +9,16 @@ def main(args):
     depth = 0
 
     # Find files - use input args from CLI.
+    # example -- how to drift only segments of a specific pdg code
+    # track = electron_track_tools.Track(args.input_edepsim_file,
+    #                                    args.event_index,
+    #                                    input_format = 'dumpTree',
+    #                                    pdgMask = 11, # only simulate electron segments
+    #                                    )
     track = electron_track_tools.Track(args.input_edepsim_file,
                                        args.event_index,
-                                       input_format = 'dumpTree')
+                                       input_format = 'dumpTree',
+                                       )
 
     # set the readout to GAMPix for DUNE
     track.reset_params(charge_readout='GAMPixD')
